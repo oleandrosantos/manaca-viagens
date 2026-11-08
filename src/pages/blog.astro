@@ -1,5 +1,9 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
 ---
 
 <BaseLayout
@@ -22,23 +26,41 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       ✳
     </span>
   </section>
-  <section class="section wrap editorial">
-    <div>
-      <span class="eyebrow">EM BREVE</span>
-      <h2>
-        As primeiras histórias
-        <br />
-        <em>ainda estão a caminho.</em>
-      </h2>
-    </div>
-    <div>
-      <p>
-        Enquanto o diário ganha forma, conheça lugares que inspiram novas
-        descobertas.
-      </p>
-      <a class="text-link" href="/destinos/">
-        Explorar destinos ↗
-      </a>
-    </div>
-  </section>
+  {posts.length ? (
+    <section class="section wrap">
+      <div class="post-grid">
+        {posts.map((post) => (
+          <article>
+            {post.data.image && (
+              <img
+                src={post.data.image}
+                alt={post.data.imageAlt || ""}
+                loading="lazy"
+              />
+            )}
+            <h2>
+              <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+            </h2>
+            <p>{post.data.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  ) : (
+    <section class="section wrap editorial">
+      <div>
+        <span class="eyebrow">EM BREVE</span>
+        <h2>As primeiras histórias ainda estão a caminho.</h2>
+      </div>
+      <div>
+        <p>
+          Enquanto o diário ganha forma, conheça lugares que inspiram novas
+          descobertas.
+        </p>
+        <a class="text-link" href="/destinos/">
+          Explorar destinos ↗
+        </a>
+      </div>
+    </section>
+  )}
 </BaseLayout>

@@ -1,0 +1,89 @@
+media:
+  input: public/media
+  output: /media
+  categories: [image, video]
+  rename: safe
+content:
+  - name: institucional
+    label: Página inicial
+    type: file
+    path: src/data/institucional.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - {
+          name: heroEyebrow,
+          label: Destaque do início,
+          type: string,
+          required: true,
+        }
+      - {
+          name: heroTitle,
+          label: Título do início,
+          type: string,
+          required: true,
+        }
+      - {
+          name: heroDescription,
+          label: Introdução do início,
+          type: text,
+          required: true,
+        }
+      - {
+          name: introTitle,
+          label: Título de apresentação,
+          type: string,
+          required: true,
+        }
+      - {
+          name: introText,
+          label: Texto de apresentação,
+          type: text,
+          required: true,
+        }
+      - {
+          name: founderText,
+          label: Texto sobre a fundadora,
+          type: text,
+          required: true,
+        }
+  - name: destinos
+    label: Destinos
+    type: collection
+    path: src/content/destinos
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    view:
+      fields: [title, region, draft]
+      primary: title
+    fields:
+      - { name: title, label: Título, type: string, required: true }
+      - { name: description, label: Resumo, type: text, required: true }
+      - { name: region, label: Região, type: string, required: true }
+      - { name: image, label: Imagem, type: image, required: true }
+      - {
+          name: imageAlt,
+          label: Descrição da imagem,
+          type: string,
+          required: true,
+        }
+      - { name: draft, label: Rascunho, type: boolean, default: true }
+      - { name: body, label: Conteúdo, type: rich-text }
+  - name: blog
+    label: Diário da Manacá
+    type: collection
+    path: src/content/blog
+    format: yaml-frontmatter
+    filename: "{primary}.md"
+    view:
+      fields: [title, date, draft]
+      primary: title
+    fields:
+      - { name: title, label: Título, type: string, required: true }
+      - { name: description, label: Resumo, type: text, required: true }
+      - { name: date, label: Data, type: date, required: true }
+      - { name: image, label: Imagem, type: image }
+      - { name: imageAlt, label: Descrição da imagem, type: string }
+      - { name: draft, label: Rascunho, type: boolean, default: true }
+      - { name: body, label: Conteúdo, type: rich-text }

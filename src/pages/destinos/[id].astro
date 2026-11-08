@@ -1,0 +1,41 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+export async function getStaticPaths() {
+  const destinos = await getCollection("destinos", ({ data }) => !data.draft);
+  return destinos.map((destino) => ({
+    params: { id: destino.id },
+    props: { destino },
+  }));
+}
+const { destino } = Astro.props;
+const { Content } = await render(destino);
+---
+
+<BaseLayout title={destino.data.title} description={destino.data.description}>
+  <section class="detail-hero">
+    <img
+      class="destination-photo"
+      src={destino.data.image}
+      alt={destino.data.imageAlt}
+    />
+    <div class="wrap detail-content">
+      <a href="/destinos/">← Todos os destinos</a>
+      <p class="eyebrow light">{destino.data.region}</p>
+      <h1>{destino.data.title}</h1>
+      <p>{destino.data.description}</p>
+    </div>
+  </section>
+  <section class="section wrap editorial">
+    <div>
+      <span class="eyebrow">UM LUGAR PARA SENTIR</span>
+      <h2>O caminho também faz parte da viagem.</h2>
+    </div>
+    <div>
+      <Content />
+      <a class="text-link" href="/servicos/">
+        Como funciona a consultoria ↗
+      </a>
+    </div>
+  </section>
+</BaseLayout>

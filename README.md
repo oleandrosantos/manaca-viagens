@@ -1,8 +1,8 @@
-﻿# Manacá Viagens
+# Manacá Viagens
 
-Primeira versão institucional local em Astro, com páginas de apresentação, consultoria, destinos, diário e contato. Consulte [MANACA_VIAGENS_CONTEXT.md](MANACA_VIAGENS_CONTEXT.md) para o briefing, as fontes e as decisões pendentes.
+Site institucional estático em Astro. Consulte [MANACA_VIAGENS_CONTEXT.md](MANACA_VIAGENS_CONTEXT.md) para o briefing, fontes e decisões pendentes.
 
-## Comandos
+## Desenvolvimento
 
 ```bash
 npm ci
@@ -13,8 +13,29 @@ npm run format:check
 npm run preview
 ```
 
-O build estático é gerado em `dist/`. Os grafismos de paisagem são composições CSS locais, não fotografias dos destinos. Os textos e a direção visual são propostas para revisão pela proprietária.
+O build é gerado em `dist/`. As rotas atuais são propostas, ainda sem decisão de migração. O site permanece com `noindex`.
+
+## Edição com Pages CMS
+
+A configuração `.pages.yml` descreve a página inicial (`src/data/institucional.json`), destinos (`src/content/destinos/*.md`) e artigos (`src/content/blog/*.md`). O texto de cada destino e artigo é Markdown; as demais seções institucionais ainda são editadas no código. A configuração segue a [documentação oficial de conteúdo](https://pagescms.org/docs/configuration/content/), [nomes de arquivo](https://pagescms.org/docs/configuration/content/filename/) e [mídia](https://pagescms.org/docs/configuration/media/).
+
+Para usar a interface hospedada, disponibilize o repositório no GitHub, acesse [Pages CMS](https://app.pagescms.org/), entre com GitHub e instale o aplicativo no repositório conforme o [guia oficial](https://pagescms.org/docs/quick-start/). Esta conexão e a interface real ainda não foram testadas. Alterações são gravadas no repositório; um novo build é necessário para aparecerem no site. Não há deploy automático configurado.
+
+Crie um destino ou artigo, informe os campos obrigatórios e o texto, e mantenha **Rascunho** ativo até a revisão. Rascunhos não são incluídos nas listagens nem nas páginas geradas, mas continuam acessíveis a quem puder ler o repositório: não armazene conteúdo confidencial nele. Desative o rascunho e gere novamente o site para publicar no build. O nome do arquivo determina a URL; renomeá-lo altera a rota e exige avaliar redirecionamento. A data organiza artigos, mas não agenda sua publicação. Imagens enviadas ao CMS ficam em `public/media/` e são referenciadas por `/media/`; informe descrição alternativa significativa. O CMS não valida direitos ou conteúdo.
+
+## Mídias do site original
+
+Cópias locais recuperadas para desenvolvimento em 08/11/2026, sem depender de hotlink:
+
+- [Vídeo da página inicial](https://manacaviagens.com/wp-content/uploads/2026/09/video-novo-jane.mp4): `public/media/video-novo-jane.mp4` (aproximadamente 66 MB); usado como fundo decorativo do hero, com controle de pausa e alternativa est?tica para movimento reduzido. é necessário revisar conteúdo, acessibilidade, legenda/transcrição e otimização antes de publicar.
+- [Logo usada no cabe?alho do site original](https://manacaviagens.com/wp-content/uploads/2026/09/ChatGPT-Image-1-de-set.-de-2026-17_54_25.png): `public/media/logo-original.png`; arquivo isolado indicado pelo HTML do site original. Confirme autoria, licen?a e vers?o oficial com a propriet?ria antes de publicar.
+- [Flor](https://manacaviagens.com/wp-content/uploads/2026/09/jane.png): `public/media/flor.png`, usada como pôster do vídeo.
+- [Chapada Diamantina](https://manacaviagens.com/wp-content/uploads/2026/10/chapada_diamantina_manaca.jpeg): `public/media/chapada.jpeg`.
+- [Serra da Mantiqueira](https://manacaviagens.com/wp-content/uploads/2026/10/Imagem-do-ChatGPT-9-de-out.-de-2026-20_53_37-1.jpg): `public/media/mantiqueira.jpg`; o nome do arquivo original não comprova autoria ou licença.
+- [Retrato de Adjane](https://manacaviagens.com/wp-content/uploads/2026/10/IMG-20240822-WA0161.jpg): `public/media/adjane.jpg`.
+
+As mídias foram autorizadas para desenvolvimento; confirme autoria, licença e autorização de imagem antes da publicação. Os banners e infográficos com texto rasterizado não foram usados como interface. A inspeção não estabelece um inventário completo do WordPress; obtenha os arquivos originais e valide as alternativas e a identidade visual com a proprietária.
 
 ## Antes da publicação
 
-Os canais de contato, identidade visual, conteúdo e direitos de uso de imagens devem ser confirmados. Não há formulário ou integração de contato, CMS, sitemap, deploy ou redirecionamentos configurados. As páginas estão com `noindex` enquanto o projeto é local. As rotas semânticas são propostas de navegação local, não uma decisão de migração: auditar backup, URLs e tráfego do WordPress antes de decidir os conflitos em `/contato/` e `/destinos/`. Não alterar DNS ou WordPress sem autorização e validação de migração.
+Confirme canais de contato, conteúdo, identidade visual e direitos. Não há formulário ou integração de contato, sitemap, deploy ou redirecionamentos configurados. Audite backup, URLs e tráfego do WordPress antes de decidir os conflitos em `/contato/` e `/destinos/`. Não altere DNS ou WordPress sem autorização e validação de migração.
