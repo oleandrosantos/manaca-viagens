@@ -1,0 +1,102 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+const steps = [
+  {
+    n: "01",
+    title: "Escuta",
+    text: "O primeiro passo é entender seus desejos, interesses e ritmo de viagem.",
+  },
+  {
+    n: "02",
+    title: "Direção",
+    text: "A escolha do destino considera seu perfil e suas expectativas.",
+  },
+  {
+    n: "03",
+    title: "Curadoria",
+    text: "Pesquisa de hospedagens, passeios e experiências para o percurso.",
+  },
+  {
+    n: "04",
+    title: "Organização",
+    text: "Orientação sobre transportes e distribuição equilibrada dos dias.",
+  },
+  {
+    n: "05",
+    title: "Sua jornada",
+    text: "Com o planejamento em mãos, é hora de viver a viagem no seu ritmo.",
+  },
+];
+---
+
+<BaseLayout
+  title="Consultoria"
+  description="Entenda como a consultoria de viagens personalizadas da Manacá pode ajudar no seu planejamento."
+>
+  <section class="page-hero lavender">
+    <div class="wrap">
+      <p class="eyebrow">CONSULTORIA / VIAGENS SOB MEDIDA</p>
+      <h1>
+        Planejar com cuidado.
+        <br />
+        <em>Viajar com leveza.</em>
+      </h1>
+      <p>Uma jornada pensada a partir de quem você é e do que deseja viver.</p>
+    </div>
+    <span class="page-flower" aria-hidden="true">
+      ✳
+    </span>
+  </section>
+  <section class="section wrap editorial">
+    <div>
+      <span class="eyebrow">O QUE FAZEMOS</span>
+      <h2>
+        O seu tempo
+        <br />
+        <em>vale a viagem.</em>
+      </h2>
+    </div>
+    <div>
+      <p>
+        A consultoria ajuda a transformar ideias em um planejamento pessoal e
+        organizado. Consideramos seus interesses, preferências, orçamento e
+        ritmo para orientar as escolhas de cada etapa.
+      </p>
+      <p>
+        Destino, hospedagem, experiências e deslocamentos são pensados como
+        partes de uma mesma jornada, com espaço para descobrir o que faz sentido
+        para você.
+      </p>
+    </div>
+  </section>
+  <section class="process">
+    <div class="wrap">
+      <span class="eyebrow">DO SONHO AO CAMINHO</span>
+      <h2>
+        Uma jornada,
+        <br />
+        <em>cinco movimentos.</em>
+      </h2>
+      <div class="steps">
+        {steps.map((step) => (
+          <article>
+            <span>{step.n}</span>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="closing wrap">
+    <span class="eyebrow">COMECE A IMAGINAR</span>
+    <h2>
+      Qual será a sua
+      <br />
+      <em>próxima descoberta?</em>
+    </h2>
+    <a class="button button-dark" href="/contato/">
+      Entre em contato <span>↗</span>
+    </a>
+  </section>
+</BaseLayout>
