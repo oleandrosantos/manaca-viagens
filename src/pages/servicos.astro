@@ -1,32 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-const steps = [
-  {
-    n: "01",
-    title: "Escuta",
-    text: "O primeiro passo é entender seus desejos, interesses e ritmo de viagem.",
-  },
-  {
-    n: "02",
-    title: "Direção",
-    text: "A escolha do destino considera seu perfil e suas expectativas.",
-  },
-  {
-    n: "03",
-    title: "Curadoria",
-    text: "Pesquisa de hospedagens, passeios e experiências para o percurso.",
-  },
-  {
-    n: "04",
-    title: "Organização",
-    text: "Orientação sobre transportes e distribuição equilibrada dos dias.",
-  },
-  {
-    n: "05",
-    title: "Sua jornada",
-    text: "Com o planejamento em mãos, é hora de viver a viagem no seu ritmo.",
-  },
-];
+import institucional from "../data/institucional.json";
 ---
 
 <BaseLayout
@@ -44,7 +18,13 @@ const steps = [
       <p>Uma jornada pensada a partir de quem você é e do que deseja viver.</p>
     </div>
     <span class="page-flower" aria-hidden="true">
-      ✳
+      <img
+        src="/media/monograma.png"
+        alt=""
+        width="817"
+        height="516"
+        loading="lazy"
+      />
     </span>
   </section>
   <section class="section wrap editorial">
@@ -57,35 +37,71 @@ const steps = [
       </h2>
     </div>
     <div>
-      <p>
-        A consultoria ajuda a transformar ideias em um planejamento pessoal e
-        organizado. Consideramos seus interesses, preferências, orçamento e
-        ritmo para orientar as escolhas de cada etapa.
-      </p>
-      <p>
-        Destino, hospedagem, experiências e deslocamentos são pensados como
-        partes de uma mesma jornada, com espaço para descobrir o que faz sentido
-        para você.
-      </p>
+      <p>{institucional.introText}</p>
+    </div>
+  </section>
+  <section class="benefits section">
+    <div class="wrap">
+      <span class="eyebrow">CONSULTORIA DE VIAGENS SOB MEDIDA</span>
+      <h2>
+        Cuidado em cada <em>escolha.</em>
+      </h2>
+      <div class="benefits-grid">
+        {institucional.beneficios.map((beneficio) => (
+          <article>
+            <h3>{beneficio.title}</h3>
+            <p>{beneficio.text}</p>
+          </article>
+        ))}
+      </div>
     </div>
   </section>
   <section class="process">
     <div class="wrap">
-      <span class="eyebrow">DO SONHO AO CAMINHO</span>
+      <span class="eyebrow">JORNADA DE VIAGEM PERSONALIZADA</span>
       <h2>
-        Uma jornada,
-        <br />
-        <em>cinco movimentos.</em>
+        Uma jornada, <em>cinco etapas.</em>
       </h2>
-      <div class="steps">
-        {steps.map((step) => (
-          <article>
-            <span>{step.n}</span>
+      <ol class="steps">
+        {institucional.jornada.map((step, index) => (
+          <li>
+            <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
             <h3>{step.title}</h3>
             <p>{step.text}</p>
-          </article>
+          </li>
         ))}
-      </div>
+      </ol>
+    </div>
+  </section>
+  <section class="section wrap editorial">
+    <div>
+      <span class="eyebrow">CONSULTORIA PERSONALIZADA</span>
+      <h2>
+        O que está <em>incluído?</em>
+      </h2>
+    </div>
+    <div>
+      <ul>
+        {institucional.incluido.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+  <section class="section wrap editorial">
+    <div>
+      <span class="eyebrow">SEU JEITO DE VIAJAR</span>
+      <h2>
+        Para quem é nossa <em>consultoria?</em>
+      </h2>
+    </div>
+    <div>
+      <p>A consultoria da Manacá é para quem:</p>
+      <ul>
+        {institucional.publico.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
     </div>
   </section>
   <section class="closing wrap">

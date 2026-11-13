@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import institucional from "../data/institucional.json";
 ---
 
 <BaseLayout
@@ -20,12 +21,24 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       </p>
     </div>
     <span class="page-flower" aria-hidden="true">
-      ✳
+      <img
+        src="/media/monograma.png"
+        alt=""
+        width="817"
+        height="516"
+        loading="lazy"
+      />
     </span>
   </section>
   <section class="section wrap editorial">
     <div>
       <span class="eyebrow">NOSSO NOME</span>
+      <img
+        class="brand-flower"
+        src="/media/flor.png"
+        alt="Flor de manacá-da-serra em tons de rosa e lilás"
+        loading="lazy"
+      />
       <h2>
         Como a flor,
         <br />
@@ -33,15 +46,24 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       </h2>
     </div>
     <div>
-      <p>
-        O manacá-da-serra muda de cor ao longo de sua floração. É uma imagem de
-        renovação e de novos ciclos — uma inspiração para olhar cada viagem como
-        uma oportunidade de descobrir o mundo e a si mesmo.
-      </p>
-      <p>
-        Na Manacá, acreditamos em experiências que respeitam o ritmo de cada
-        pessoa e valorizam a natureza, a cultura e a identidade dos lugares.
-      </p>
+      {institucional.nomeTexto.map((texto) => (
+        <p>{texto}</p>
+      ))}
+    </div>
+  </section>
+  <section class="about-story">
+    <div class="section wrap editorial">
+      <div>
+        <span class="eyebrow">QUEM SOMOS</span>
+        <h2>
+          A história da <em>Manacá.</em>
+        </h2>
+      </div>
+      <div>
+        {institucional.historiaTexto.map((texto) => (
+          <p>{texto}</p>
+        ))}
+      </div>
     </div>
   </section>
   <section class="founder">
@@ -59,12 +81,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <br />
         <em>Adjane Costa.</em>
       </h2>
-      <p>
-        Travel Designer e criadora da Manacá, Adjane começou a organizar viagens
-        para si e para a família em 2015. Desse interesse nasceu uma maneira de
-        pensar viagens com atenção às pessoas e aos detalhes que tornam cada
-        percurso especial.
-      </p>
+      {institucional.adjaneTexto.map((texto) => (
+        <p>{texto}</p>
+      ))}
       <a class="text-link" href="/servicos/">
         Conheça a consultoria ↗
       </a>

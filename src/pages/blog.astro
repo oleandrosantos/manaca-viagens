@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import institucional from "../data/institucional.json";
 import { getCollection } from "astro:content";
 const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
@@ -18,12 +19,16 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
         <br />
         <em>levar com você.</em>
       </h1>
-      <p>
-        Um espaço para compartilhar olhares, caminhos e inspirações de viagem.
-      </p>
+      <p>{institucional.diarioTexto}</p>
     </div>
     <span class="page-flower" aria-hidden="true">
-      ✳
+      <img
+        src="/media/monograma.png"
+        alt=""
+        width="817"
+        height="516"
+        loading="lazy"
+      />
     </span>
   </section>
   {posts.length ? (

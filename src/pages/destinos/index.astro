@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import institucional from "../../data/institucional.json";
 import { getCollection } from "astro:content";
 const destinos = await getCollection("destinos", ({ data }) => !data.draft);
 ---
@@ -16,9 +17,7 @@ const destinos = await getCollection("destinos", ({ data }) => !data.draft);
         <br />
         <em>ficam com a gente.</em>
       </h1>
-      <p>
-        Natureza, cultura e tempo para descobrir. Comece a imaginar por aqui.
-      </p>
+      <p>{institucional.destinosTexto}</p>
     </div>
   </section>
   <section class="section wrap">

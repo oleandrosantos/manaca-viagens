@@ -278,9 +278,17 @@ p {
   justify-content: space-between;
 }
 .flower {
-  font-size: 140px;
+  display: block;
+  width: 90px;
+  height: 90px;
   color: #d2a2ba;
-  line-height: 1;
+}
+.flower svg,
+.flower img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 .intro h2 {
   margin-top: 0;
@@ -554,12 +562,21 @@ p {
 }
 .page-flower {
   position: absolute;
-  right: 12%;
-  top: 0;
-  font-size: 440px;
+  right: 10%;
+  top: 10px;
+  width: 320px;
+  max-width: 40vw;
+  height: auto;
   color: #d9bdcd;
-  opacity: 0.6;
-  line-height: 1;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.page-flower svg,
+.page-flower img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
 }
 .editorial {
   display: grid;
@@ -573,6 +590,14 @@ p {
   padding-top: 26px;
   color: #685e65;
   max-width: 550px;
+}
+.editorial ul {
+  list-style: disc;
+  padding-left: 1.4rem;
+}
+.editorial li {
+  margin-bottom: 0.75rem;
+  line-height: 1.75;
 }
 .editorial .text-link {
   color: #302837;
@@ -588,7 +613,7 @@ p {
   gap: 25px;
   margin-top: 60px;
 }
-.steps article {
+.steps li {
   border-top: 1px solid #c8adb9;
   padding-top: 20px;
 }
@@ -685,7 +710,8 @@ p {
     align-items: center;
   }
   .flower {
-    font-size: 70px;
+    width: 60px;
+    height: 60px;
   }
   .intro-copy {
     display: block;
@@ -712,8 +738,9 @@ p {
     grid-template-columns: repeat(2, 1fr);
   }
   .page-flower {
-    font-size: 300px;
-    right: -70px;
+    width: 220px;
+    height: auto;
+    right: -20px;
     top: 30px;
   }
   .footer-grid {
@@ -775,7 +802,9 @@ p {
     font-size: 3.5rem;
   }
   .page-flower {
-    opacity: 0.3;
+    width: 170px;
+    height: auto;
+    opacity: 0.25;
   }
   .steps {
     grid-template-columns: 1fr;
@@ -844,7 +873,7 @@ p {
   margin: 2rem 0;
 }
 
-/* A imagem mant?m o hero leg?vel enquanto o v?deo n?o est? dispon?vel. */
+/* A imagem mantém o hero legível enquanto o vídeo não está disponível. */
 .hero-art {
   background: #424b42 url("/media/chapada.jpeg") center / cover no-repeat;
 }
@@ -866,17 +895,34 @@ p {
 .hero-motion {
   position: absolute;
   z-index: 2;
-  right: 2rem;
+  right: 1.75rem;
   bottom: 1.5rem;
-  border: 1px solid white;
-  background: #302837;
-  color: white;
-  padding: 0.7rem;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(24, 27, 25, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: rgba(255, 255, 255, 0.88);
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+.hero-motion[hidden] {
+  display: none;
+}
+.hero-motion:hover {
+  background: rgba(24, 27, 25, 0.75);
+  border-color: rgba(255, 255, 255, 0.55);
+  color: #ffffff;
 }
 .hero-motion:focus-visible {
-  outline: 3px solid white;
-  outline-offset: 4px;
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
 }
 .brand img {
   display: block;
@@ -891,4 +937,59 @@ p {
   .hero-video {
     display: none;
   }
+}
+
+.brand-flower {
+  display: block;
+  width: min(100%, 240px);
+  height: auto;
+  margin-top: 2rem;
+  border-radius: 50%;
+}
+.benefits {
+  background: #f8f0f5;
+}
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+.benefits-grid article {
+  border-top: 1px solid #c8adb9;
+  padding-top: 1.5rem;
+}
+.benefits-grid h3 {
+  font-size: 1.8rem;
+}
+.benefits-grid p {
+  color: #51464d;
+}
+.steps {
+  list-style: none;
+  padding: 0;
+}
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  overflow-wrap: anywhere;
+}
+.footer nav a {
+  overflow-wrap: anywhere;
+}
+
+/* Blocos editoriais com espaço de leitura consistente. */
+.about-story {
+  background: #f8f0f5;
+}
+.section-intro {
+  max-width: 70ch;
+  color: #685e65;
+  margin-bottom: 2rem;
+}
+.closing-intro {
+  max-width: 65ch;
+  margin-inline: auto;
 }

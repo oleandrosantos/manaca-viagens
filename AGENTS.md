@@ -7,3 +7,5 @@
 - O briefing aponta conflitos entre rotas antigas e conteúdo proposto. Audite e decida a migração antes de implementar redirecionamentos; não crie regras contraditórias.
 - Execute `npm run check` e `npm run build` após mudanças relevantes. Documente limitações e falhas de validação.
 - Não publique nem altere DNS ou o WordPress sem autorização e validação de migração.
+
+- Priorize sempre os textos originais escritos pela cliente, preservando sua redação e significado; use propostas editoriais apenas quando necessárias e identifique sua origem no inventário. Evite duplicação excessiva e mantenha o conteúdo editável no CMS.

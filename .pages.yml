@@ -48,6 +48,37 @@ content:
           type: text,
           required: true,
         }
+      - { name: nomeTexto, label: Origem do nome, type: text, list: true }
+      - {
+          name: historiaTexto,
+          label: História da Manacá,
+          type: text,
+          list: true,
+        }
+      - { name: adjaneTexto, label: História de Adjane, type: text, list: true }
+      - { name: incluido, label: O que está incluído, type: text, list: true }
+      - {
+          name: publico,
+          label: Para quem é a consultoria,
+          type: text,
+          list: true,
+        }
+      - { name: destinosTexto, label: Apresentação dos destinos, type: text }
+      - { name: diarioTexto, label: Apresentação do diário, type: text }
+      - name: beneficios
+        label: Benefícios da consultoria
+        type: object
+        list: true
+        fields:
+          - { name: title, label: Título, type: string, required: true }
+          - { name: text, label: Texto, type: text, required: true }
+      - name: jornada
+        label: Etapas da jornada
+        type: object
+        list: true
+        fields:
+          - { name: title, label: Título, type: string, required: true }
+          - { name: text, label: Texto, type: text, required: true }
   - name: destinos
     label: Destinos
     type: collection

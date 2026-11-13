@@ -3,6 +3,81 @@
   "heroTitle": "O mundo é vasto. O seu jeito de viajar é único.",
   "heroDescription": "Viagens pensadas com cuidado, para quem prefere descobrir cada lugar no próprio ritmo.",
   "introTitle": "Uma viagem começa muito antes da partida.",
-  "introText": "Começa com uma ideia, um desejo e a vontade de viver algo novo. A Manacá transforma esses primeiros pensamentos em uma jornada que combina com você.",
-  "founderText": "Inspirada na flor que muda de cor ao longo do tempo, a Manacá acredita na beleza dos novos ciclos. À frente da consultoria, Adjane Costa compartilha o cuidado e a curiosidade que a aproximaram do planejamento de viagens."
+  "introText": "Na Manacá Viagens, transformamos suas ideias em experiências que traduzem o que você deseja viver. A partir dos seus interesses e preferências, planejamos cada escolha de acordo com seu perfil e seu ritmo.",
+  "founderText": "Inspirada na flor que muda de cor ao longo do tempo, a Manacá acredita na beleza dos novos ciclos. À frente da consultoria, Adjane Costa compartilha o cuidado e a curiosidade que a aproximaram do planejamento de viagens.",
+  "beneficios": [
+    {
+      "title": "Compreensão do seu perfil",
+      "text": "Entendemos seus interesses, preferências e expectativas para criar uma viagem alinhada ao que você busca."
+    },
+    {
+      "title": "Roteiros sob medida",
+      "text": "Planejamos cada detalhe de acordo com o seu ritmo e estilo de viagem."
+    },
+    {
+      "title": "Curadoria de experiências",
+      "text": "Selecionamos lugares, vivências e experiências que combinam com o seu jeito de viajar."
+    },
+    {
+      "title": "Suporte durante a viagem",
+      "text": "Você viaja com mais segurança e tranquilidade do início ao fim."
+    }
+  ],
+  "jornada": [
+    {
+      "title": "Conhecemos você",
+      "text": "Conversamos para entender seu estilo de viagem, interesses, expectativas e orçamento."
+    },
+    {
+      "title": "Planejamos",
+      "text": "Estruturamos toda a viagem com atenção aos detalhes."
+    },
+    {
+      "title": "Personalizamos",
+      "text": "Criamos uma proposta alinhada ao seu perfil."
+    },
+    {
+      "title": "Refinamos",
+      "text": "Fazemos os ajustes necessários antes da viagem."
+    },
+    {
+      "title": "Entregamos",
+      "text": "Você recebe um planejamento completo, pronto para viver sua experiência com tranquilidade."
+    }
+  ],
+  "nomeTexto": [
+    "O nome Manacá tem origem indígena brasileira e carrega a força e a beleza da nossa natureza. Inspirada no manacá-da-serra, flor nativa da Mata Atlântica que se transforma e floresce em diferentes cores ao longo do tempo, a Manacá representa transformação, renovação e novos ciclos.",
+    "Assim como a flor revela novas cores a cada fase, acreditamos que uma viagem também pode despertar novos olhares, proporcionar descobertas e renovar a forma como percebemos o que está ao nosso redor. É dessa conexão que nasce a nossa proposta: criar viagens personalizadas, de acordo com os desejos, o ritmo e a essência de cada viajante, valorizando a natureza, a cultura local e as experiências autênticas que tornam cada lugar único."
+  ],
+  "historiaTexto": [
+    "A Manacá Viagens nasceu para transformar a forma como as pessoas vivem suas experiências. Somos uma consultoria especializada em criar viagens personalizadas, leves e com propósito, para quem deseja desacelerar, conectar-se com a natureza e viver experiências autênticas, respeitando cada destino, sua cultura e sua essência.",
+    "Acreditamos que viajar é mais do que conhecer lugares. É criar memórias, renovar energias, ampliar olhares e permitir-se viver novos momentos. Por isso, cuidamos de cada detalhe com atenção, sensibilidade e cuidado, desde o primeiro planejamento até o retorno para casa.",
+    "Inspirados pela natureza e pelo próprio significado do manacá, que floresce e se transforma, acreditamos que cada experiência pode abrir espaço para novos olhares, novos caminhos e momentos de renovação.",
+    "Na Manacá, cada experiência é pensada de forma única, respeitando o seu jeito de viajar e aquilo que você deseja viver. Do planejamento aos pequenos detalhes, construímos cada experiência com atenção e propósito, para que o caminho até o destino seja tão leve quanto os momentos que você levará de volta para casa."
+  ],
+  "adjaneTexto": [
+    "Eu sou Adjane Costa, Travel Designer e criadora da Manacá Viagens.",
+    "Minha história com o planejamento de viagens começou em 2015, quando passei a organizar viagens para mim e para minha família. Sempre gostei de pesquisar, planejar e cuidar de cada detalhe, buscando tornar cada experiência mais leve, tranquila e bem aproveitada.",
+    "Com o tempo, esse cuidado se transformou em algo maior: o desejo de criar experiências personalizadas também para outras pessoas.",
+    "Foi assim que nasceu a Manacá — de uma paixão pessoal por planejar viagens, que se transformou no desejo de ajudar outras pessoas a viajar com mais leveza, propósito e conexão com cada destino."
+  ],
+  "destinosTexto": "Valorizamos destinos que convidam a desacelerar, apreciar a natureza e se conectar com a cultura e a identidade de cada região. Lugares onde as paisagens, os sabores e as experiências despertam novos olhares e nos lembram da beleza de viver cada instante com mais leveza. Conheça os destinos que inspiram a Manacá e descubra tudo o que eles podem oferecer.",
+  "diarioTexto": "Compartilhamos ideias, inspirações e dicas para descobrir novas experiências, apreciar os pequenos detalhes e aproveitar cada momento com mais leveza, tranquilidade e conexão com o que realmente importa.",
+  "incluido": [
+    "Orientação para escolher o destino que mais combina com seu perfil e suas expectativas.",
+    "Pesquisa e seleção de hospedagens que combinem com seu perfil e orçamento.",
+    "Organização dos passeios e experiências que farão parte do roteiro.",
+    "Orientações sobre transportes, trajetos e as melhores formas de se deslocar durante a viagem.",
+    "Sugestões de atividades e vivências que valorizem a essência de cada destino",
+    "Distribuição das atividades de forma equilibrada, respeitando o tempo disponível e o seu ritmo",
+    "Planejamento das escolhas considerando o investimento definido para a experiência.",
+    "Organização de todas as informações em um roteiro claro e personalizado, para facilitar suas decisões e tornar tudo mais leve."
+  ],
+  "publico": [
+    "Valoriza experiências autênticas, que aproximam da natureza, da cultura e dos sabores locais.",
+    "Prefere um roteiro pensado para seus interesses, sem precisar seguir programações prontas.",
+    "Busca aproveitar cada lugar no próprio ritmo, com espaço para descobrir e contemplar.",
+    "Quer otimizar o tempo de planejamento e ter mais clareza nas escolhas.",
+    "Aprecia os detalhes e acredita que uma viagem especial começa muito antes da partida."
+  ]
 }
