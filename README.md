@@ -1,27 +1,28 @@
 # Manacá Viagens
 
-Site institucional estático em Astro. Consulte [MANACA_VIAGENS_CONTEXT.md](MANACA_VIAGENS_CONTEXT.md) para o briefing, fontes e decisões pendentes.
+Site institucional e painel de conteúdo moderno desenvolvido com Next.js 15 e Payload CMS 3. Consulte [MANACA_VIAGENS_CONTEXT.md](MANACA_VIAGENS_CONTEXT.md) para o briefing, fontes e decisões de conteúdo.
 
 ## Desenvolvimento
 
 ```bash
-npm ci
-npm run dev
-npm run check
-npm run build
-npm run format:check
-npm run preview
+npm install
+npm run seed          # Popula o banco local SQLite com os dados institucionais e admin
+npm run dev           # Inicia o servidor local Next.js + Payload CMS (http://localhost:3000)
+npm run build         # Gera o build de produção e prerenderiza páginas estáticas
+npm run start         # Inicia o servidor de produção
 ```
 
-O build é gerado em `dist/`. As rotas atuais são propostas, ainda sem decisão de migração. O site permanece com `noindex`.
+### Painel Administrativo (Payload CMS)
 
-## Edição com Pages CMS
-
-A configuração `.pages.yml` descreve a página inicial e os benefícios e etapas da consultoria (`src/data/institucional.json`), destinos (`src/content/destinos/*.md`) e artigos (`src/content/blog/*.md`). O texto de cada destino e artigo é Markdown; as demais seções institucionais ainda são editadas no código. A configuração segue a [documentação oficial de conteúdo](https://pagescms.org/docs/configuration/content/), [nomes de arquivo](https://pagescms.org/docs/configuration/content/filename/) e [mídia](https://pagescms.org/docs/configuration/media/).
-
-Para usar a interface hospedada, disponibilize o repositório no GitHub, acesse [Pages CMS](https://app.pagescms.org/), entre com GitHub e instale o aplicativo no repositório conforme o [guia oficial](https://pagescms.org/docs/quick-start/). Esta conexão e a interface real ainda não foram testadas. Alterações são gravadas no repositório; um novo build é necessário para aparecerem no site. Não há deploy automático configurado.
-
-Crie um destino ou artigo, informe os campos obrigatórios e o texto, e mantenha **Rascunho** ativo até a revisão. Rascunhos não são incluídos nas listagens nem nas páginas geradas, mas continuam acessíveis a quem puder ler o repositório: não armazene conteúdo confidencial nele. Desative o rascunho e gere novamente o site para publicar no build. O nome do arquivo determina a URL; renomeá-lo altera a rota e exige avaliar redirecionamento. A data organiza artigos, mas não agenda sua publicação. Imagens enviadas ao CMS ficam em `public/media/` e são referenciadas por `/media/`; informe descrição alternativa significativa. O CMS não valida direitos ou conteúdo.
+- URL local: `http://localhost:3000/admin`
+- Usuário inicial padrão gerado pelo seed:
+  - **E-mail:** `admin@manacaviagens.com.br`
+  - **Senha:** `admin-manaca-2026`
+- **Coleções disponíveis:**
+  - `Destinos`: gestão completa de destinos, resumo, imagem, conteúdo e rascunhos.
+  - `Posts`: gestão do Diário da Manacá (blog).
+  - `Media`: upload e organização de imagens e arquivos.
+  - `Institucional` (Global): textos institucionais, história, fundadora, benefícios, etapas e canais de contato.
 
 ## Mídias do site original
 

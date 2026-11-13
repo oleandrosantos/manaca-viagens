@@ -1,6 +1,12 @@
 node_modules/
 dist/
 .astro/
+.next/
+*.tsbuildinfo
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
 .env
 .env.*
 !.env.example

@@ -1,26 +1,37 @@
 {
   "name": "manaca-viagens",
   "version": "0.1.0",
-  "description": "Fundação estática do site Manacá Viagens",
+  "description": "Site Manacá Viagens com Payload CMS",
   "scripts": {
-    "dev": "astro dev",
-    "check": "astro check",
-    "build": "astro build",
-    "preview": "astro preview",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "seed": "tsx src/seed.ts",
+    "generate:types": "payload generate:types",
+    "generate:importmap": "payload generate:importmap",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
   "type": "module",
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.5",
-    "astro": "^7.4.7",
+    "@payloadcms/db-sqlite": "^3.93.0",
+    "@payloadcms/next": "^3.93.0",
+    "@payloadcms/richtext-lexical": "^3.93.0",
+    "graphql": "^16.15.0",
+    "next": "^15.4.11",
+    "payload": "^3.93.0",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4.3.5"
   },
   "private": true,
   "devDependencies": {
-    "@astrojs/check": "^0.9.12",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "prettier": "^3.9.10",
-    "prettier-plugin-astro": "^1.1.2",
+    "tsx": "^4.23.15",
     "typescript": "^6.0.3"
   }
 }
