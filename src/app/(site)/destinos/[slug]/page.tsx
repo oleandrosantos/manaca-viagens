@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
+import { getAssetPath } from '@/lib/asset'
 import ContentRenderer from '@/components/ContentRenderer'
 
 interface DestinoPageProps {
@@ -84,7 +85,7 @@ export default async function DestinoDetailPage({ params }: DestinoPageProps) {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="destination-photo"
-          src={destino.image}
+          src={getAssetPath(destino.image)}
           alt={destino.title}
         />
         <div className="wrap detail-content">

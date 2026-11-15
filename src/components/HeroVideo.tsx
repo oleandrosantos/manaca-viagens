@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
+import { getAssetPath } from '@/lib/asset'
 
 export const HeroVideo: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -60,7 +61,11 @@ export const HeroVideo: React.FC = () => {
 
   return (
     <>
-      <div className="hero-art" aria-hidden="true">
+      <div
+        className="hero-art"
+        aria-hidden="true"
+        style={{ backgroundImage: `url(${getAssetPath('/media/chapada.jpeg')})` }}
+      >
         <video
           ref={videoRef}
           className="hero-video"
@@ -69,9 +74,9 @@ export const HeroVideo: React.FC = () => {
           loop
           playsInline
           preload="auto"
-          poster="/media/chapada.jpeg"
+          poster={getAssetPath('/media/chapada.jpeg')}
         >
-          <source src="/media/video-novo-jane.mp4" type="video/mp4" />
+          <source src={getAssetPath('/media/video-novo-jane.mp4')} type="video/mp4" />
         </video>
       </div>
       {showControls && (

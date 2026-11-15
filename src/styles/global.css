@@ -1158,7 +1158,7 @@ p {
 
 /* A imagem mantém o hero legível enquanto o vídeo não está disponível. */
 .hero-art {
-  background: #241422 url("/media/chapada.jpeg") center / cover no-repeat;
+  background: #241422 center / cover no-repeat;
 }
 .hero-art::after {
   content: "";

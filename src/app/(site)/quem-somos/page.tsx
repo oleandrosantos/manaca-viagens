@@ -2,6 +2,7 @@ import React from 'react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getInstitucionalData } from '@/lib/institucional'
+import { getAssetPath } from '@/lib/asset'
 
 export const metadata: Metadata = {
   title: 'A Manacá',
@@ -34,7 +35,7 @@ export default async function QuemSomosPage() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="brand-flower"
-            src="/media/flor.png"
+            src={getAssetPath('/media/flor.png')}
             alt="Flor de manacá-da-serra em tons de rosa e lilás"
             loading="lazy"
           />
@@ -71,7 +72,7 @@ export default async function QuemSomosPage() {
         <div className="founder-art">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/media/adjane.jpg"
+            src={getAssetPath('/media/adjane.jpg')}
             alt="Adjane Costa em meio à vegetação"
             loading="lazy"
           />

@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
 import { getInstitucionalData } from '@/lib/institucional'
+import { getAssetPath } from '@/lib/asset'
 import HeroVideo from '@/components/HeroVideo'
 
 export const metadata: Metadata = {
@@ -113,7 +114,7 @@ export default async function HomePage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 className="destination-photo"
-                src={destino.image}
+                src={getAssetPath(destino.image)}
                 alt={destino.title}
                 loading="lazy"
               />
@@ -131,7 +132,7 @@ export default async function HomePage() {
         <div className="founder-art">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/media/adjane.jpg"
+            src={getAssetPath('/media/adjane.jpg')}
             alt="Adjane Costa em meio à vegetação"
             loading="lazy"
           />

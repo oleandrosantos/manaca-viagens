@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Cormorant_Garamond, Plus_Jakarta_Sans } from 'next/font/google'
 import '@/styles/global.css'
 import { getInstitucionalData } from '@/lib/institucional'
+import { getAssetPath } from '@/lib/asset'
 import HeaderNav from '@/components/HeaderNav'
 
 const cormorant = Cormorant_Garamond({
@@ -62,7 +63,7 @@ export default async function SiteLayout({
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 className="brand-logo-img"
-                src="/media/logo-original.png"
+                src={getAssetPath('/media/logo-original.png')}
                 alt="Manacá Viagens"
                 width={1983}
                 height={793}

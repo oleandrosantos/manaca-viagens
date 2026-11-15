@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
 import { getInstitucionalData } from '@/lib/institucional'
+import { getAssetPath } from '@/lib/asset'
 
 export const metadata: Metadata = {
   title: 'Destinos',
@@ -53,7 +54,7 @@ export default async function DestinosPage() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 className="destination-photo"
-                src={destino.image}
+                src={getAssetPath(destino.image)}
                 alt={destino.title}
                 loading="lazy"
               />
