@@ -6,6 +6,7 @@ import '@/styles/global.css'
 import { getInstitucionalData } from '@/lib/institucional'
 import { getAssetPath } from '@/lib/asset'
 import HeaderNav from '@/components/HeaderNav'
+import WhatsAppWidget from '@/components/WhatsAppWidget'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -132,6 +133,10 @@ export default async function SiteLayout({
             <span>Feito para descobrir, com calma.</span>
           </div>
         </footer>
+        <WhatsAppWidget
+          whatsappUrl={contatos.whatsapp}
+          whatsappLabel={contatos.whatsappLabel}
+        />
       </body>
     </html>
   )

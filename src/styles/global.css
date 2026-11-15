@@ -1447,3 +1447,204 @@ p {
   max-width: 65ch;
   margin-inline: auto;
 }
+
+/* Widget flutuante e pop-up de atendimento via WhatsApp */
+.wa-widget {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.wa-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 20px 0 16px;
+  border: 0;
+  border-radius: 999px;
+  background: #196e43;
+  color: #ffffff;
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 0.94rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow: 0 12px 28px rgba(34, 18, 32, 0.22);
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wa-trigger:hover {
+  background: #145936;
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(34, 18, 32, 0.28);
+}
+
+.wa-trigger:focus-visible,
+.wa-popup-close:focus-visible,
+.wa-popup-textarea:focus-visible,
+.wa-popup-send:focus-visible {
+  outline: 3px solid #8a2267;
+  outline-offset: 3px;
+}
+
+.wa-popup {
+  width: min(360px, calc(100vw - 32px));
+  background: #ffffff;
+  border: 1px solid #ebd8e5;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 22px 48px rgba(34, 18, 32, 0.22);
+  animation: wa-popup-enter 0.22s ease-out;
+}
+
+@keyframes wa-popup-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.wa-popup-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  background: #221220;
+  color: #ffffff;
+}
+
+.wa-popup-eyebrow {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #e9c8df;
+  margin-bottom: 4px;
+}
+
+.wa-popup-title {
+  margin: 0;
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.15;
+  color: #ffffff;
+}
+
+.wa-popup-subtitle {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: #f3e4ee;
+}
+
+.wa-popup-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.wa-popup-close:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.wa-popup-body {
+  padding: 18px 20px 20px;
+  background: #faf8f6;
+}
+
+.wa-popup-greeting {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: #fbf2f7;
+  border: 1px solid #ebd8e5;
+  color: #2b1a27;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.wa-popup-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #574653;
+}
+
+.wa-popup-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d9bfd1;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #2b1a27;
+  font-family: var(--font-sans), Arial, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  resize: vertical;
+  min-height: 76px;
+}
+
+.wa-popup-send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 12px;
+  padding: 13px 18px;
+  border-radius: 999px;
+  background: #196e43;
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.wa-popup-send:hover {
+  background: #145936;
+}
+
+@media (max-width: 640px) {
+  .wa-widget {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .wa-trigger {
+    min-height: 48px;
+    padding: 0 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-trigger,
+  .wa-popup,
+  .wa-popup-close,
+  .wa-popup-send {
+    transition: none;
+    animation: none;
+  }
+}
