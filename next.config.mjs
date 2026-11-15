@@ -6,6 +6,7 @@ const isStaticExport = process.env.NEXT_STATIC_EXPORT === 'true'
 const nextConfig = {
   output: isStaticExport ? 'export' : undefined,
   basePath: process.env.NEXT_BASE_PATH || undefined,
+  trailingSlash: isStaticExport ? true : undefined,
   images: {
     unoptimized: isStaticExport,
     remotePatterns: [
