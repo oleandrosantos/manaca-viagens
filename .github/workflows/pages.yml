@@ -24,6 +24,26 @@ jobs:
       - run: npm ci
       - run: npm run check
       - run: npm run build -- --site "https://${{ github.repository_owner }}.github.io" --base "/${{ github.event.repository.name }}"
+      - name: Adapt internal URLs to the GitHub Pages base path
+        env:
+          PAGES_REPOSITORY: ${{ github.event.repository.name }}
+        run: |
+          python3 - <<'PY'
+          import os
+          import re
+          from pathlib import Path
+
+          base = "/" + os.environ["PAGES_REPOSITORY"] + "/"
+          pattern = re.compile(r'(?<![\w-])((?:href|src|poster|data-src)=")(/[^"]*)"')
+          def rewrite(match):
+              url = match[2]
+              if url.startswith("//") or url.startswith(base):
+                  return match[0]
+              return match[1] + base + url.lstrip("/") + '"'
+
+          for path in Path("dist").rglob("*.html"):
+              path.write_text(pattern.sub(rewrite, path.read_text()))
+          PY
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

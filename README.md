@@ -13,7 +13,7 @@ npm run format:check
 npm run preview
 ```
 
-O build é gerado em `dist/`. As rotas atuais são propostas, ainda sem decisão de migração. O site permanece com `noindex`. A página inicial de teste exibe “teste” em branco sobre fundo verde.
+O build é gerado em `dist/`. As rotas atuais são propostas, ainda sem decisão de migração. O site permanece com `noindex`.
 
 ## GitHub Pages
 
@@ -23,7 +23,7 @@ O workflow `.github/workflows/pages.yml` valida e publica o build a cada altera�
 
 A configuração `.pages.yml` descreve a página inicial (`src/data/institucional.json`), destinos (`src/content/destinos/*.md`) e artigos (`src/content/blog/*.md`). O texto de cada destino e artigo é Markdown; as demais seções institucionais ainda são editadas no código. A configuração segue a [documentação oficial de conteúdo](https://pagescms.org/docs/configuration/content/), [nomes de arquivo](https://pagescms.org/docs/configuration/content/filename/) e [mídia](https://pagescms.org/docs/configuration/media/).
 
-Para usar a interface hospedada, disponibilize o repositório no GitHub, acesse [Pages CMS](https://app.pagescms.org/), entre com GitHub e instale o aplicativo no repositório conforme o [guia oficial](https://pagescms.org/docs/quick-start/). Esta conexão e a interface real ainda não foram testadas. Alterações são gravadas no repositório; um novo build é necessário para aparecerem no site. O workflow do GitHub Pages publica automaticamente os commits da `main` quando o Pages está habilitado. Durante o teste, o conteúdo institucional da home permanece salvo em `src/data/institucional.json`, mas não é exibido na página inicial.
+Para usar a interface hospedada, disponibilize o repositório no GitHub, acesse [Pages CMS](https://app.pagescms.org/), entre com GitHub e instale o aplicativo no repositório conforme o [guia oficial](https://pagescms.org/docs/quick-start/). Esta conexão e a interface real ainda não foram testadas. Alterações são gravadas no repositório; um novo build é necessário para aparecerem no site. O workflow do GitHub Pages publica automaticamente os commits da `main` quando o Pages está habilitado.
 
 Crie um destino ou artigo, informe os campos obrigatórios e o texto, e mantenha **Rascunho** ativo até a revisão. Rascunhos não são incluídos nas listagens nem nas páginas geradas, mas continuam acessíveis a quem puder ler o repositório: não armazene conteúdo confidencial nele. Desative o rascunho e gere novamente o site para publicar no build. O nome do arquivo determina a URL; renomeá-lo altera a rota e exige avaliar redirecionamento. A data organiza artigos, mas não agenda sua publicação. Imagens enviadas ao CMS ficam em `public/media/` e são referenciadas por `/media/`; informe descrição alternativa significativa. O CMS não valida direitos ou conteúdo.
 
