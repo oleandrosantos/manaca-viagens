@@ -885,7 +885,12 @@ p {
 }
 .footer-brand {
   background: #fffcfa;
-  padding: 8px;
+  padding: 10px 14px;
+  border-radius: 6px;
+}
+.footer-brand img {
+  width: 190px;
+  max-width: 100%;
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-video {
