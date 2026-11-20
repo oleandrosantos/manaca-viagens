@@ -30,8 +30,43 @@ const destinos = await getCollection("destinos", ({ data }) => !data.draft);
         Conheça a consultoria <span>↗</span>
       </a>
     </div>
-    <button class="hero-motion" type="button" hidden>
-      Pause o v?deo de fundo
+    <button
+      class="hero-motion"
+      type="button"
+      hidden
+      data-playing="false"
+      aria-label="Reproduzir vídeo de fundo"
+      title="Reproduzir vídeo de fundo"
+    >
+      <svg
+        class="hero-motion-icon hero-motion-icon-pause"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+        <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+      </svg>
+      <svg
+        class="hero-motion-icon hero-motion-icon-play"
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <path d="m8 5 11 7-11 7V5Z"></path>
+      </svg>
     </button>
   </section>
   <section class="intro wrap section">
@@ -158,40 +193,44 @@ const destinos = await getCollection("destinos", ({ data }) => !data.draft);
   const button = document.querySelector<HTMLButtonElement>(".hero-motion");
   const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
   if (video && button) {
+    const updateButton = () => {
+      const playing = !video.paused && !video.ended;
+      const label = playing
+        ? "Pausar vídeo de fundo"
+        : "Reproduzir vídeo de fundo";
+      button.dataset.playing = String(playing);
+      button.setAttribute("aria-label", label);
+      button.title = label;
+    };
+
     const updateMotion = () => {
       if (motion.matches) {
         video.pause();
-        video.removeAttribute("src");
-        video.load();
+        if (video.hasAttribute("src")) {
+          video.removeAttribute("src");
+          video.load();
+        }
         button.hidden = true;
-      } else if (video.dataset.src) {
-        video.src = video.dataset.src;
-        video
-          .play()
-          .then(() => {
-            button.hidden = false;
-            button.textContent = "Pause o v?deo de fundo";
-          })
-          .catch(() => {
-            button.hidden = true;
-          });
+      } else {
+        button.hidden = false;
+        if (video.dataset.src && !video.hasAttribute("src")) {
+          video.src = video.dataset.src;
+        }
+        video.play().catch(updateButton);
       }
+      updateButton();
     };
+
+    video.addEventListener("play", updateButton);
+    video.addEventListener("pause", updateButton);
     button.addEventListener("click", () => {
       if (video.paused) {
-        video
-          .play()
-          .then(() => {
-            button.textContent = "Pause o v?deo de fundo";
-          })
-          .catch(() => {
-            button.hidden = true;
-          });
+        video.play().catch(updateButton);
       } else {
         video.pause();
-        button.textContent = "Reproduzir v?deo de fundo";
       }
     });
+
     motion.addEventListener("change", updateMotion);
     updateMotion();
   }
