@@ -42,6 +42,8 @@ As mídias foram autorizadas para desenvolvimento; confirme autoria, licença e 
 
 ## Antes da publicação
 
-As melhorias de UX preservam duas confirmações necessárias com a responsável pela Manacá: (1) verificar o WhatsApp/e-mail institucional antes de liberar botões de contato, atualmente substituídos pelo aviso "Canais de contato em breve"; (2) confirmar o formato e o escopo exatos da entrega da consultoria antes de prometer um arquivo, quantidade de páginas, reservas ou serviços adicionais. A seção "O que você recebe" descreve apenas o roteiro/planejamento organizado mencionado no briefing.
+Os canais de WhatsApp e e-mail informados no briefing foram confirmados pelo responsável em 20/11/2026. Eles estão centralizados em `src/data/contato.json` e podem ser atualizados no Pages CMS; a página de contato oferece os dois canais e o atalho flutuante do WhatsApp aparece em todas as páginas. Os links são diretos, sem coleta de dados no site.
 
-Confirme canais de contato, conteúdo, identidade visual e direitos. Não há formulário ou integração de contato, sitemap ou redirecionamentos configurados. Audite backup, URLs e tráfego do WordPress antes de decidir os conflitos em `/contato/` e `/destinos/`. Não altere DNS ou WordPress sem autorização e validação de migração.
+Ainda é necessário confirmar com a responsável o formato e o escopo exatos da entrega da consultoria antes de prometer um arquivo, quantidade de páginas, reservas ou serviços adicionais. A seção "O que você recebe" descreve apenas o roteiro/planejamento organizado mencionado no briefing.
+
+Confirme conteúdo, identidade visual e direitos. Não há formulário de contato, sitemap ou redirecionamentos configurados. Audite backup, URLs e tráfego do WordPress antes de decidir os conflitos em `/contato/` e `/destinos/`. Não altere DNS ou WordPress sem autorização e validação de migração.

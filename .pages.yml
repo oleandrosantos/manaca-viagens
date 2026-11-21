@@ -48,6 +48,17 @@ content:
           type: text,
           required: true,
         }
+  - name: canais
+    label: Canais de contato
+    type: file
+    path: src/data/contato.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - { name: whatsappNumber, label: WhatsApp (55 + DDD + número), type: string, required: true }
+      - { name: whatsappDisplay, label: Número exibido, type: string, required: true }
+      - { name: email, label: E-mail institucional, type: string, required: true }
   - name: destinos
     label: Destinos
     type: collection

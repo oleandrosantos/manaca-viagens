@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import WhatsAppWidget from "../components/WhatsAppWidget.astro";
 interface Props {
   title: string;
   description: string;
@@ -117,6 +118,7 @@ const links = [
         <span>Feito para descobrir, com calma.</span>
       </div>
     </footer>
+    <WhatsAppWidget />
     <script>
       document.addEventListener("keydown", (event) => {
         if (event.key === "Escape") {
