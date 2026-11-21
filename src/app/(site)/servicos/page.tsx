@@ -110,6 +110,25 @@ export default async function ServicosPage() {
         </div>
       </section>
 
+      <section className="section wrap editorial" aria-labelledby="entrega-titulo">
+        <div>
+          <span className="eyebrow">DEPOIS DO PLANEJAMENTO</span>
+          <h2 id="entrega-titulo">
+            O que você <em>recebe.</em>
+          </h2>
+        </div>
+        <div>
+          <p>
+            Um roteiro ou planejamento organizado, construído a partir das escolhas
+            feitas ao longo da consultoria, para orientar sua viagem com mais clareza.
+          </p>
+          <p>
+            O formato de entrega e os detalhes incluídos são alinhados durante o
+            atendimento, de acordo com o planejamento combinado.
+          </p>
+        </div>
+      </section>
+
       <section className="closing-section wrap">
         <div className="closing">
           <span className="eyebrow eyebrow-on-dark">COMECE A IMAGINAR</span>

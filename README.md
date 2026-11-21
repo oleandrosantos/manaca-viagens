@@ -15,9 +15,7 @@ npm run start         # Inicia o servidor de produção
 ### Painel Administrativo (Payload CMS)
 
 - URL local: `http://localhost:3000/admin`
-- Usuário inicial padrão gerado pelo seed:
-  - **E-mail:** `admin@manacaviagens.com.br`
-  - **Senha:** `admin-manaca-2026`
+- O seed **não gera credenciais públicas padrão**. Para criar o primeiro usuário, defina `PAYLOAD_ADMIN_EMAIL` e `PAYLOAD_ADMIN_PASSWORD` no ambiente privado do CMS.
 - **Coleções disponíveis:**
   - `Destinos`: gestão completa de destinos, resumo, imagem, conteúdo e rascunhos.
   - `Posts`: gestão do Diário da Manacá (blog).
@@ -46,3 +44,15 @@ Confirme canais de contato, conteúdo, identidade visual e direitos. Não há fo
 Em 08/11/2026 foram inspecionados visualmente o [infográfico de benefícios](https://manacaviagens.com/wp-content/uploads/2026/10/Consultoria_de_Viagens_Sob_Medida-1.jpeg) e o [infográfico da jornada](https://manacaviagens.com/wp-content/uploads/2026/10/Jornada-de-Viagem-Personalizada.png). Os quatro benefícios e as cinco etapas foram transcritos em `src/data/institucional.json` e apresentados como texto HTML na página de consultoria. A introdução da homepage e a descrição da consultoria reproduzem textos da [home original](https://manacaviagens.com/) e da [página original de serviços](https://manacaviagens.com/destinos/), respectivamente.
 
 O [rodapé original em imagem](https://manacaviagens.com/wp-content/uploads/2026/10/Rodape-Elegante-Manaca-Viagens-5-1.png) mostra WhatsApp (71) 98623-3609, Instagram manacaviagens e e-mail manacaviagens1@hotmail.com. Não foram encontrados links desses canais no HTML das páginas consultadas; os endereços `wa.me`, Instagram e `mailto:` foram construídos a partir dos dados exibidos, sem verificar a titularidade ou o funcionamento dos canais. Confirme todos os contatos e a disponibilidade do suporte durante a viagem com a proprietária antes de publicar. A configuração do CMS ainda não foi testada na interface hospedada.
+
+## Atualização da branch Payload com a main (21/11/2026)
+
+A migração mantém o Next.js/Payload e incorpora os ajustes recentes aprovados na versão Astro: título institucional e textos da home, mensagem de Quem Somos, fonte mobile de 44 px, sobreposição de contraste dos destinos, modo claro, logomarca do rodapé e seção "O que você recebe" na consultoria.
+
+Os contatos confirmados ficam em `src/data/contato.json` e são inicializados no Global Institucional do Payload. O widget de WhatsApp da versão Next.js permite digitar uma mensagem antes de redirecionar. Instagram permanece não confirmado e não é exposto no conteúdo inicial.
+
+**Limitação provisória:** o GitHub Pages recebe somente a exportação estática. O painel `/admin` e as APIs do Payload não estão hospedados no Pages; para editar e publicar em produção será necessário um servidor Next.js/Payload com banco persistente e mídia/backup configurados. O seed do build estático cria uma base temporária e não representa uma sincronização de conteúdo do CMS em produção.
+
+A pipeline da branch executa apenas validação, sem deploy no site público. O workflow de `main` gera `out/` com Next.js em vez do antigo `dist/` do Astro.
+
+**Segurança:** configure `PAYLOAD_SECRET`, `DATABASE_URI`, `PAYLOAD_ADMIN_EMAIL` e `PAYLOAD_ADMIN_PASSWORD` apenas no ambiente seguro do futuro CMS. Não reutilize credenciais demonstrativas antigas. Evite executar `npm run seed` repetidamente contra o banco de produção, pois ele atualiza conteúdo institucional e posts de exemplo.

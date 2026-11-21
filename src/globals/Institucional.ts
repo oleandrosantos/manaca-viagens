@@ -21,13 +21,13 @@ export const Institucional: GlobalConfig = {
       type: 'textarea',
       label: 'Hero - Descrição',
       defaultValue:
-        'Viagens pensadas com cuidado, para quem prefere descobrir cada lugar no próprio ritmo.',
+        'Ajudamos você a escolher o destino, pesquisar hospedagens e organizar os deslocamentos, no seu ritmo.',
     },
     {
       name: 'introTitle',
       type: 'text',
       label: 'Introdução - Título',
-      defaultValue: 'Uma viagem começa muito antes da partida.',
+      defaultValue: 'Toda viagem começa a ganhar sentido, antes mesmo de acontecer.',
     },
     {
       name: 'introText',
@@ -155,13 +155,13 @@ export const Institucional: GlobalConfig = {
         {
           name: 'instagram',
           type: 'text',
-          defaultValue: 'https://www.instagram.com/manacaviagens/',
+          defaultValue: '',
           label: 'Link do Instagram',
         },
         {
           name: 'instagramLabel',
           type: 'text',
-          defaultValue: '@manacaviagens',
+          defaultValue: '',
           label: 'Texto do Instagram',
         },
         {

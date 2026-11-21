@@ -20,11 +20,10 @@ export default async function QuemSomosPage() {
           <h1>
             Uma viagem pode
             <br />
-            <em>abrir novos caminhos.</em>
+            <em>abrir novos horizontes.</em>
           </h1>
           <p>
-            Planejar é cuidar do caminho para que você possa estar presente em cada
-            descoberta.
+            O cuidado começa com as escolhas e se revela em cada momento vivido.
           </p>
         </div>
       </section>
@@ -101,6 +100,7 @@ export default async function QuemSomosPage() {
             <br />
             <em>é o ponto de partida.</em>
           </h2>
+          <p>Toda viagem começa a ganhar sentido, antes mesmo de acontecer.</p>
           <Link className="button button-light" href="/contato">
             Contato <span>↗</span>
           </Link>

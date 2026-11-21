@@ -1,6 +1,7 @@
 import { getPayload } from 'payload'
 import config from './payload.config'
 import institucionalData from './data/institucional.json' with { type: 'json' }
+import contactConfig from './data/contato.json' with { type: 'json' }
 
 function toLexicalRichText(text: string) {
   const paragraphs = text.split('\n\n').filter(Boolean)
@@ -43,17 +44,17 @@ export async function runSeed() {
   })
 
   if (existingUsers.totalDocs === 0) {
-    await payload.create({
-      collection: 'users',
-      data: {
-        email: 'admin@manacaviagens.com.br',
-        password: 'admin-manaca-2026',
-        name: 'Adjane Costa',
-      },
-    })
-    console.log(
-      'Admin user criado: admin@manacaviagens.com.br / admin-manaca-2026',
-    )
+    const email = process.env.PAYLOAD_ADMIN_EMAIL
+    const password = process.env.PAYLOAD_ADMIN_PASSWORD
+    if (email && password) {
+      await payload.create({
+        collection: 'users',
+        data: { email, password, name: 'Adjane Costa' },
+      })
+      console.log('Usuário administrativo inicial criado via variáveis de ambiente.')
+    } else {
+      console.log('Seed sem administrador: configure PAYLOAD_ADMIN_EMAIL e PAYLOAD_ADMIN_PASSWORD para a instalação do CMS.')
+    }
   }
 
   // 2. Popular o Global Institucional com os dados originais
@@ -82,12 +83,12 @@ export async function runSeed() {
       incluido: institucionalData.incluido.map((item: string) => ({ item })),
       publico: institucionalData.publico.map((item: string) => ({ item })),
       contatos: {
-        instagram: 'https://www.instagram.com/manacaviagens/',
-        instagramLabel: '@manacaviagens',
-        whatsapp: 'https://wa.me/5571986233609',
-        whatsappLabel: '(71) 98623-3609',
-        email: 'mailto:manacaviagens1@hotmail.com',
-        emailLabel: 'manacaviagens1@hotmail.com',
+        instagram: '',
+        instagramLabel: '',
+        whatsapp: `https://wa.me/${contactConfig.whatsappNumber}`,
+        whatsappLabel: contactConfig.whatsappDisplay,
+        email: `mailto:${contactConfig.email}`,
+        emailLabel: contactConfig.email,
       },
     },
   })

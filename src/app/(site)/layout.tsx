@@ -78,9 +78,15 @@ export default async function SiteLayout({
           <div className="wrap footer-grid">
             <div>
               <Link className="footer-brand" href="/" aria-label="Manacá Viagens, início">
-                <span className="footer-brand-text">
-                  Manacá <em>Viagens</em>
-                </span>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  className="footer-brand-logo"
+                  src={getAssetPath('/media/logo-original.png')}
+                  alt="Manacá Viagens"
+                  width={1983}
+                  height={793}
+                  loading="lazy"
+                />
               </Link>
               <p>
                 Viagens pensadas com cuidado,

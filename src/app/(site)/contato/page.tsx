@@ -4,7 +4,7 @@ import { getInstitucionalData } from '@/lib/institucional'
 
 export const metadata: Metadata = {
   title: 'Contato',
-  description: 'Informações sobre contato com a Manacá Viagens.',
+  description: 'Converse com a Manacá Viagens pelo WhatsApp ou e-mail e comece a planejar sua viagem personalizada.',
 }
 
 export default async function ContatoPage() {
@@ -22,6 +22,18 @@ export default async function ContatoPage() {
             <em>com uma ideia.</em>
           </h1>
           <p>Conte para nós o que você sonha viver na sua próxima jornada.</p>
+          <div className="contact-hero-actions">
+            {contatos.whatsapp && (
+              <a className="button button-dark" href={contatos.whatsapp} target="_blank" rel="noopener noreferrer">
+                Falar pelo WhatsApp <span aria-hidden="true">↗</span>
+              </a>
+            )}
+            {contatos.email && (
+              <a className="text-link" href={contatos.email}>
+                Enviar e-mail <span aria-hidden="true">↗</span>
+              </a>
+            )}
+          </div>
         </div>
       </section>
 

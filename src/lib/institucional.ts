@@ -1,5 +1,6 @@
 import { getPayloadClient } from './payload'
 import fallback from '@/data/institucional.json'
+import contactConfig from '@/data/contato.json'
 
 export interface InstitucionalData {
   heroEyebrow: string
@@ -29,12 +30,12 @@ export interface InstitucionalData {
 
 export async function getInstitucionalData(): Promise<InstitucionalData> {
   const defaultContatos = {
-    instagram: 'https://www.instagram.com/manacaviagens/',
-    instagramLabel: '@manacaviagens',
-    whatsapp: 'https://wa.me/5571986233609',
-    whatsappLabel: '(71) 98623-3609',
-    email: 'mailto:manacaviagens1@hotmail.com',
-    emailLabel: 'manacaviagens1@hotmail.com',
+    instagram: '',
+    instagramLabel: '',
+    whatsapp: `https://wa.me/${contactConfig.whatsappNumber}`,
+    whatsappLabel: contactConfig.whatsappDisplay,
+    email: `mailto:${contactConfig.email}`,
+    emailLabel: contactConfig.email,
   }
 
   try {
