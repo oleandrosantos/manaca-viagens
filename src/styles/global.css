@@ -363,6 +363,7 @@ p {
 }
 .destination-card {
   min-height: 480px;
+  background: #596451;
   text-decoration: none;
 }
 .chapada .destination-art {
@@ -413,12 +414,22 @@ p {
   background: #354d41;
   opacity: 0.8;
 }
-.destination-card:after,
-.detail-hero:after {
+.destination-card::after,
+.detail-hero::after {
   content: "";
   position: absolute;
   inset: 0;
+  pointer-events: none;
   background: linear-gradient(0deg, rgba(27, 38, 31, 0.72), transparent 70%);
+}
+.destination-card::after {
+  background: linear-gradient(
+    to top,
+    rgba(16, 25, 20, 0.94) 0%,
+    rgba(16, 25, 20, 0.94) 42%,
+    rgba(16, 25, 20, 0.82) 62%,
+    rgba(16, 25, 20, 0) 100%
+  );
 }
 .card-content {
   position: absolute;
@@ -550,6 +561,15 @@ p {
 .page-hero p:not(.eyebrow) {
   max-width: 460px;
   color: #695d65;
+}
+.page-hero p.contact-status {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid #9b267c;
+  background: #fffcfa;
+  color: #493344;
+  font-weight: 700;
 }
 .blush {
   background: #f3e8e8;
@@ -801,6 +821,13 @@ p {
     margin-top: 100px;
   }
 }
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 44px;
+    line-height: 1.05;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *:before,

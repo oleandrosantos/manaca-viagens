@@ -42,4 +42,6 @@ As mídias foram autorizadas para desenvolvimento; confirme autoria, licença e 
 
 ## Antes da publicação
 
+As melhorias de UX preservam duas confirmações necessárias com a responsável pela Manacá: (1) verificar o WhatsApp/e-mail institucional antes de liberar botões de contato, atualmente substituídos pelo aviso "Canais de contato em breve"; (2) confirmar o formato e o escopo exatos da entrega da consultoria antes de prometer um arquivo, quantidade de páginas, reservas ou serviços adicionais. A seção "O que você recebe" descreve apenas o roteiro/planejamento organizado mencionado no briefing.
+
 Confirme canais de contato, conteúdo, identidade visual e direitos. Não há formulário ou integração de contato, sitemap ou redirecionamentos configurados. Audite backup, URLs e tráfego do WordPress antes de decidir os conflitos em `/contato/` e `/destinos/`. Não altere DNS ou WordPress sem autorização e validação de migração.
