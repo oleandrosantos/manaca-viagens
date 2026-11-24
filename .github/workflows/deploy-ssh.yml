@@ -1,0 +1,238 @@
+name: Deploy Static Site via SSH
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Simular deploy (rsync --dry-run) sem alterar arquivos no servidor'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-ssh-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - name: Build static Next.js site
+        env:
+          NEXT_BASE_PATH: ${{ vars.SSH_BASE_PATH || '' }}
+          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET || 'static-export-only-not-a-live-auth-secret' }}
+        run: npm run build:static
+      - name: Verify static output
+        run: |
+          set -euo pipefail
+          test -f out/index.html
+          test -f out/404.html
+      - name: Upload static artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ssh-static-site
+          path: out/
+          include-hidden-files: true
+          retention-days: 1
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Download static artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ssh-static-site
+          path: out
+
+      - name: Validate configuration and build artifact
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST || vars.SSH_HOST }}
+          SSH_PORT_INPUT: ${{ secrets.SSH_PORT || vars.SSH_PORT || '' }}
+          SSH_USER: ${{ secrets.SSH_USER || vars.SSH_USER }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_TARGET_DIR: ${{ secrets.SSH_TARGET_DIR || vars.SSH_TARGET_DIR }}
+        run: |
+          set -euo pipefail
+
+          if [ ! -f out/index.html ]; then
+            echo "::error::Artefato estático inválido: out/index.html não encontrado."
+            exit 1
+          fi
+
+          missing=0
+          for var_name in SSH_HOST SSH_USER SSH_PRIVATE_KEY SSH_TARGET_DIR; do
+            if [ -z "${!var_name:-}" ]; then
+              echo "::error::Secret ou variável obrigatória ausente: ${var_name}"
+              missing=1
+            fi
+          done
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
+
+          if [ -n "$SSH_PORT_INPUT" ] && ! [[ "$SSH_PORT_INPUT" =~ ^[0-9]+$ ]]; then
+            echo "::error::SSH_PORT deve conter apenas dígitos."
+            exit 1
+          fi
+
+          if printf '%s' "$SSH_TARGET_DIR" | LC_ALL=C grep -q '[[:cntrl:]]'; then
+            echo "::error::SSH_TARGET_DIR contém caracteres de controle ou quebras de linha inválidos."
+            exit 1
+          fi
+
+          TARGET_CLEAN="${SSH_TARGET_DIR%/}"
+          case "$TARGET_CLEAN" in
+            ""|"/"|"."|".."|"~"|"/root"|"/home"|"/var"|"/var/www"|"/etc"|"/usr"|"/tmp")
+              echo "::error::SSH_TARGET_DIR aponta para um caminho proibido ou inseguro para rsync --delete: '${SSH_TARGET_DIR}'."
+              exit 1
+              ;;
+          esac
+
+          printf 'TARGET_CLEAN=%s\n' "$TARGET_CLEAN" >> "$GITHUB_ENV"
+
+      - name: Configure SSH
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST || vars.SSH_HOST }}
+          SSH_PORT_INPUT: ${{ secrets.SSH_PORT || vars.SSH_PORT || '' }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PASSPHRASE: ${{ secrets.SSH_PASSPHRASE || '' }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS || vars.SSH_KNOWN_HOSTS || '' }}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          printf '%s\n' "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+
+          if ! ssh-keygen -y -P "" -f ~/.ssh/deploy_key >/dev/null 2>&1; then
+            if [ -z "${SSH_PASSPHRASE:-}" ]; then
+              echo "::error::A chave SSH_PRIVATE_KEY exige senha (passphrase) ou está em formato inválido. Cadastre a secret SSH_PASSPHRASE no GitHub (use a chave PEM/OpenSSH, não o formato .ppk)."
+              exit 1
+            fi
+            if ! ssh-keygen -p -P "$SSH_PASSPHRASE" -N "" -f ~/.ssh/deploy_key -q; then
+              echo "::error::Não foi possível desbloquear SSH_PRIVATE_KEY com a SSH_PASSPHRASE informada. Verifique se a senha e o formato da chave (PEM/OpenSSH, não .ppk) estão corretos."
+              exit 1
+            fi
+          fi
+
+          if [ -n "$SSH_KNOWN_HOSTS" ]; then
+            RESOLVED_SSH_PORT="${SSH_PORT_INPUT:-22}"
+            printf '%s\n' "$SSH_KNOWN_HOSTS" | tr -d '\r' > ~/.ssh/known_hosts
+            chmod 600 ~/.ssh/known_hosts
+          elif [ -n "$SSH_PORT_INPUT" ]; then
+            RESOLVED_SSH_PORT="$SSH_PORT_INPUT"
+            echo "::notice::SSH_KNOWN_HOSTS não configurado; obtendo chave do host via ssh-keyscan na porta ${RESOLVED_SSH_PORT}. Recomenda-se fixar SSH_KNOWN_HOSTS em produção."
+            ssh-keyscan -p "$RESOLVED_SSH_PORT" -T 15 "$SSH_HOST" > ~/.ssh/known_hosts 2>/dev/null || true
+            chmod 600 ~/.ssh/known_hosts
+          else
+            RESOLVED_SSH_PORT="22"
+            echo "::notice::SSH_KNOWN_HOSTS não configurado; obtendo chave do host via ssh-keyscan. Recomenda-se fixar SSH_KNOWN_HOSTS em produção."
+            ssh-keyscan -p 22 -T 10 "$SSH_HOST" > ~/.ssh/known_hosts 2>/dev/null || true
+            if [ ! -s ~/.ssh/known_hosts ]; then
+              echo "::notice::Porta SSH 22 sem resposta em ${SSH_HOST}; tentando porta padrão cPanel 2222..."
+              RESOLVED_SSH_PORT="2222"
+              ssh-keyscan -p 2222 -T 15 "$SSH_HOST" > ~/.ssh/known_hosts 2>/dev/null || true
+            fi
+            chmod 600 ~/.ssh/known_hosts
+          fi
+
+          if [ ! -s ~/.ssh/known_hosts ]; then
+            echo "::error::Não foi possível validar a chave do host SSH em ${SSH_HOST} (porta testada: ${RESOLVED_SSH_PORT}). Verifique se o acesso SSH está habilitado no servidor ou configure SSH_PORT/SSH_KNOWN_HOSTS."
+            exit 1
+          fi
+
+          printf 'RESOLVED_SSH_PORT=%s\n' "$RESOLVED_SSH_PORT" >> "$GITHUB_ENV"
+
+      - name: Verify remote directory and WordPress safety lock
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST || vars.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER || vars.SSH_USER }}
+          ALLOW_WORDPRESS_OVERWRITE: ${{ vars.ALLOW_WORDPRESS_OVERWRITE || 'false' }}
+        run: |
+          set -euo pipefail
+          TARGET_B64="$(printf '%s' "$TARGET_CLEAN" | base64 | tr -d '\n')"
+
+          ssh -i ~/.ssh/deploy_key \
+            -p "$RESOLVED_SSH_PORT" \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=yes \
+            -o UserKnownHostsFile=~/.ssh/known_hosts \
+            -o ConnectTimeout=15 \
+            "${SSH_USER}@${SSH_HOST}" \
+            bash -s -- "$TARGET_B64" "$ALLOW_WORDPRESS_OVERWRITE" << 'EOF'
+          set -euo pipefail
+          TARGET_DIR="$(printf '%s' "$1" | base64 -d 2>/dev/null || printf '%s' "$1" | base64 -D)"
+          ALLOW_WP="$2"
+
+          mkdir -p -- "$TARGET_DIR"
+          RESOLVED_DIR="$(cd -- "$TARGET_DIR" && pwd -P)"
+
+          case "$RESOLVED_DIR" in
+            "/"|"/root"|"/home"|"/var"|"/var/www"|"/etc"|"/usr"|"/tmp"|"$HOME")
+              echo "ERRO: Diretório remoto resolvido é inseguro para sincronização: $RESOLVED_DIR" >&2
+              exit 1
+              ;;
+          esac
+
+          if [ "$ALLOW_WP" != "true" ]; then
+            if [ -f "$RESOLVED_DIR/wp-config.php" ] || [ -d "$RESOLVED_DIR/wp-includes" ] || [ -d "$RESOLVED_DIR/wp-admin" ]; then
+              echo "ERRO: Instalação WordPress detectada em $RESOLVED_DIR." >&2
+              echo "Deploy abortado para evitar sobrescrita acidental. Use um diretório de staging/homologação ou defina ALLOW_WORDPRESS_OVERWRITE=true somente após backup completo e validação da migração." >&2
+              exit 1
+            fi
+          fi
+          EOF
+
+      - name: Sync static files with rsync
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST || vars.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER || vars.SSH_USER }}
+          DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+        run: |
+          set -euo pipefail
+          command -v rsync >/dev/null 2>&1 || (sudo apt-get update && sudo apt-get install -y rsync)
+
+          SSH_CMD="ssh -i ~/.ssh/deploy_key -p ${RESOLVED_SSH_PORT} -o BatchMode=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=~/.ssh/known_hosts -o ConnectTimeout=15"
+
+          RSYNC_ARGS=(
+            -rlvz
+            --checksum
+            --delete
+            --no-perms
+            --no-owner
+            --no-group
+            --omit-dir-times
+            --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r
+            --exclude=.well-known/
+            --exclude=cgi-bin/
+          )
+
+          if [ ! -f out/.htaccess ]; then
+            RSYNC_ARGS+=(--exclude=.htaccess)
+          fi
+
+          if [ "$DRY_RUN" = "true" ]; then
+            echo "::notice::Executando em modo dry-run: nenhum arquivo remoto será modificado."
+            RSYNC_ARGS+=(--dry-run --itemize-changes)
+          fi
+
+          rsync "${RSYNC_ARGS[@]}" -e "$SSH_CMD" out/ "${SSH_USER}@${SSH_HOST}:${TARGET_CLEAN}/"
+
+      - name: Cleanup SSH credentials
+        if: always()
+        run: rm -f ~/.ssh/deploy_key ~/.ssh/known_hosts

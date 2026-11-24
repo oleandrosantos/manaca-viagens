@@ -56,3 +56,48 @@ Os contatos confirmados ficam em `src/data/contato.json` e são inicializados no
 A pipeline da branch executa apenas validação, sem deploy no site público. O workflow de `main` gera `out/` com Next.js em vez do antigo `dist/` do Astro.
 
 **Segurança:** configure `PAYLOAD_SECRET`, `DATABASE_URI`, `PAYLOAD_ADMIN_EMAIL` e `PAYLOAD_ADMIN_PASSWORD` apenas no ambiente seguro do futuro CMS. Não reutilize credenciais demonstrativas antigas. Evite executar `npm run seed` repetidamente contra o banco de produção, pois ele atualiza conteúdo institucional e posts de exemplo.
+
+## Deploy estático via GitHub Actions (SSH)
+
+O workflow [`.github/workflows/deploy-ssh.yml`](.github/workflows/deploy-ssh.yml) executa `npm run check` e `npm run build:static` para gerar a exportação estática em `out/` e sincroniza os arquivos via `rsync` sobre SSH em hospedagem compartilhada ou servidor estático (Nginx, Apache, LiteSpeed). Ele roda em `push` para `main` e manualmente via `workflow_dispatch` (com opção `dry_run`), mantendo o workflow de GitHub Pages ([`.github/workflows/pages.yml`](.github/workflows/pages.yml)) funcionando em paralelo.
+
+### Configurações obrigatórias (Secrets ou Variables)
+
+Configure em **Settings → Secrets and variables → Actions** (ou no Environment `production`). `SSH_PRIVATE_KEY` (e `SSH_PASSPHRASE`, quando houver) devem ser sempre **Secrets**; `SSH_HOST`, `SSH_USER` e `SSH_TARGET_DIR` podem ser **Secrets** ou **Variables**:
+
+| Nome | Descrição |
+|---|---|
+| `SSH_HOST` | Endereço ou IP do servidor SSH |
+| `SSH_USER` | Usuário SSH com permissão de escrita no diretório web |
+| `SSH_PRIVATE_KEY` | Chave privada SSH dedicada ao deploy (formato PEM/OpenSSH, não `.ppk`, com ou sem passphrase) |
+| `SSH_TARGET_DIR` | Caminho remoto de destino (ex.: `/var/www/manacaviagens` ou `/home/usuario/domains/homolog.manacaviagens.com/public_html`) |
+
+### Secrets e Variables opcionais
+
+| Nome | Tipo | Padrão | Descrição |
+|---|---|---|---|
+| `SSH_PASSPHRASE` | Secret | *(vazio)* | Senha (passphrase) da chave privada, obrigatória caso a chave tenha sido gerada com senha (ex.: pelo gerador do cPanel) |
+| `SSH_PORT` | Secret ou Variable | `22` (fallback `2222`) | Porta SSH; se não for informada (e `SSH_KNOWN_HOSTS` estiver vazio), o workflow testa `22` e depois `2222` (padrão cPanel) |
+| `SSH_KNOWN_HOSTS` | Secret ou Variable | *(vazio)* | Saída de `ssh-keyscan -p <PORTA> <HOST>` para fixar a identidade do servidor |
+| `SSH_BASE_PATH` | Variable | `""` | Prefixo de subdiretório caso o site não fique na raiz do domínio (ex.: `/previa`) |
+| `PAYLOAD_SECRET` | Secret | *(fallback estático)* | Segredo usado apenas durante o seed temporário do build estático |
+| `ALLOW_WORDPRESS_OVERWRITE` | Variable | `false` | Trava de segurança que aborta o deploy se encontrar `wp-config.php`, `wp-includes` ou `wp-admin` no destino |
+
+### Preparação da chave SSH e primeiro teste
+
+**Pelo cPanel (gerando chave com senha):**
+1. Em **Segurança → Acesso SSH → Gerenciar chaves SSH → Gerar uma nova chave**, crie a chave com uma senha forte.
+2. Na lista **Chaves públicas**, clique em **Gerenciar → Autorizar**.
+3. Em **Chaves privadas**, clique em **Exibir/Baixar** (copie a chave PEM/OpenSSH `-----BEGIN ... PRIVATE KEY-----`, **não** o arquivo `.ppk`), salve na secret `SSH_PRIVATE_KEY` e salve a senha na secret `SSH_PASSPHRASE`.
+
+**Ou pelo terminal (chave sem senha):**
+
+```bash
+ssh-keygen -t ed25519 -C "github-actions-deploy" -f deploy_key -N ""
+```
+
+1. Importe `deploy_key.pub` no servidor (`~/.ssh/authorized_keys` ou **Importar chave → Autorizar** no cPanel) e salve `deploy_key` na secret `SSH_PRIVATE_KEY`.
+2. Opcionalmente, capture a assinatura do host com `ssh-keyscan -p <PORTA> <HOST>` e salve em `SSH_KNOWN_HOSTS`.
+3. Na aba **Actions** do GitHub, execute primeiro **Deploy Static Site via SSH → Run workflow** com a opção `dry_run` marcada para conferir os arquivos sem alterar o servidor.
+
+> **Aviso de migração e SEO:** `src/app/(site)/layout.tsx` mantém `robots: { index: false, follow: false }` durante a fase de validação. Não aponte o deploy para o diretório do WordPress em produção nem altere DNS antes de fazer backup completo e decidir a estratégia das rotas em conflito (`/contato/` e `/destinos/`).
