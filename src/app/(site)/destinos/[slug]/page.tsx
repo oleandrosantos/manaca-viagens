@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
 import { getAssetPath } from '@/lib/asset'
+import { canonicalUrl } from '@/lib/seo'
 import ContentRenderer from '@/components/ContentRenderer'
 
 interface DestinoPageProps {
@@ -58,6 +59,9 @@ export async function generateMetadata({
   return {
     title: destino.title,
     description: destino.summary,
+    alternates: {
+      canonical: canonicalUrl(`/destinos/${destino.slug}`),
+    },
   }
 }
 

@@ -4,10 +4,14 @@ import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
 import { getInstitucionalData } from '@/lib/institucional'
 import { getAssetPath } from '@/lib/asset'
+import { canonicalUrl } from '@/lib/seo'
 
 export const metadata: Metadata = {
   title: 'Destinos',
   description: 'Inspire-se com a Chapada Diamantina e a Serra da Mantiqueira.',
+  alternates: {
+    canonical: canonicalUrl('/destinos'),
+  },
 }
 
 export default async function DestinosPage() {

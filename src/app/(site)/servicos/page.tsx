@@ -2,11 +2,15 @@ import React from 'react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getInstitucionalData } from '@/lib/institucional'
+import { canonicalUrl } from '@/lib/seo'
 
 export const metadata: Metadata = {
   title: 'Consultoria',
   description:
     'Entenda como a consultoria de viagens personalizadas da Manacá pode ajudar no seu planejamento.',
+  alternates: {
+    canonical: canonicalUrl('/servicos'),
+  },
 }
 
 export default async function ServicosPage() {

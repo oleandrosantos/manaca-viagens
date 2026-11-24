@@ -37,7 +37,7 @@ As mídias foram autorizadas para desenvolvimento; confirme autoria, licença e 
 
 ## Antes da publicação
 
-Confirme canais de contato, conteúdo, identidade visual e direitos. Não há formulário ou integração de contato, sitemap, deploy ou redirecionamentos configurados. Audite backup, URLs e tráfego do WordPress antes de decidir os conflitos em `/contato/` e `/destinos/`. Não altere DNS ou WordPress sem autorização e validação de migração.
+Confirme canais de contato, conteúdo, identidade visual e direitos. Não há formulário de contato ou redirecionamentos configurados (o envio estático gera `sitemap.xml` e `robots.txt` em `src/app/sitemap.ts` e `src/app/robots.ts`). Audite backup, URLs e tráfego do WordPress antes de decidir os conflitos em `/contato/` e `/destinos/`. Não altere DNS ou WordPress sem autorização e validação de migração.
 
 ## Fontes de conteúdo e contatos
 
@@ -100,4 +100,4 @@ ssh-keygen -t ed25519 -C "github-actions-deploy" -f deploy_key -N ""
 2. Opcionalmente, capture a assinatura do host com `ssh-keyscan -p <PORTA> <HOST>` e salve em `SSH_KNOWN_HOSTS`.
 3. Na aba **Actions** do GitHub, execute primeiro **Deploy Static Site via SSH → Run workflow** com a opção `dry_run` marcada para conferir os arquivos sem alterar o servidor.
 
-> **Aviso de migração e SEO:** `src/app/(site)/layout.tsx` mantém `robots: { index: false, follow: false }` durante a fase de validação. Não aponte o deploy para o diretório do WordPress em produção nem altere DNS antes de fazer backup completo e decidir a estratégia das rotas em conflito (`/contato/` e `/destinos/`).
+> **Aviso de migração e SEO:** a indexação (`robots` em `src/app/(site)/layout.tsx` e `src/app/robots.ts`) é habilitada automaticamente no build do domínio raiz (`manacaviagens.com`, quando `NEXT_BASE_PATH` está vazio) e bloqueada automaticamente quando `NEXT_BASE_PATH` está definido (prévia no GitHub Pages) ou quando `SITE_ALLOW_INDEX=false`. Não aponte o deploy para o diretório do WordPress em produção nem altere DNS antes de fazer backup completo e decidir a estratégia das rotas em conflito (`/contato/` e `/destinos/`).

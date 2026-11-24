@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
+import { canonicalUrl } from '@/lib/seo'
 import ContentRenderer from '@/components/ContentRenderer'
 
 interface BlogPostProps {
@@ -57,6 +58,9 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.summary,
+    alternates: {
+      canonical: canonicalUrl(`/blog/${post.slug}`),
+    },
   }
 }
 

@@ -3,10 +3,14 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
 import { getInstitucionalData } from '@/lib/institucional'
+import { canonicalUrl } from '@/lib/seo'
 
 export const metadata: Metadata = {
   title: 'Diário da Manacá',
   description: 'Histórias e inspirações para viajar com a Manacá.',
+  alternates: {
+    canonical: canonicalUrl('/blog'),
+  },
 }
 
 export default async function BlogPage() {

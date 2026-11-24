@@ -5,6 +5,7 @@ import { Cormorant_Garamond, Plus_Jakarta_Sans } from 'next/font/google'
 import '@/styles/global.css'
 import { getInstitucionalData } from '@/lib/institucional'
 import { getAssetPath } from '@/lib/asset'
+import { SITE_URL, isIndexingAllowed } from '@/lib/seo'
 import HeaderNav from '@/components/HeaderNav'
 import WhatsAppWidget from '@/components/WhatsAppWidget'
 
@@ -24,6 +25,7 @@ const jakarta = Plus_Jakarta_Sans({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     template: '%s | Manacá Viagens',
     default: 'Manacá Viagens — Consultoria de Viagens Personalizadas',
@@ -31,8 +33,8 @@ export const metadata: Metadata = {
   description:
     'Consultoria de viagens personalizadas, com curadoria cuidadosa de destinos e ritmo sob medida.',
   robots: {
-    index: false,
-    follow: false,
+    index: isIndexingAllowed,
+    follow: isIndexingAllowed,
   },
 }
 

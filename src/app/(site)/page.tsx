@@ -4,11 +4,15 @@ import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
 import { getInstitucionalData } from '@/lib/institucional'
 import { getAssetPath } from '@/lib/asset'
+import { canonicalUrl } from '@/lib/seo'
 import HeroVideo from '@/components/HeroVideo'
 
 export const metadata: Metadata = {
   title: 'Viagens no seu ritmo',
   description: 'Consultoria de viagens personalizadas, com cuidado em cada escolha.',
+  alternates: {
+    canonical: canonicalUrl('/'),
+  },
 }
 
 export default async function HomePage() {

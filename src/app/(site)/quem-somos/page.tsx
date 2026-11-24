@@ -3,10 +3,14 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getInstitucionalData } from '@/lib/institucional'
 import { getAssetPath } from '@/lib/asset'
+import { canonicalUrl } from '@/lib/seo'
 
 export const metadata: Metadata = {
   title: 'A Manacá',
   description: 'Conheça a história e a maneira de pensar viagens da Manacá.',
+  alternates: {
+    canonical: canonicalUrl('/quem-somos'),
+  },
 }
 
 export default async function QuemSomosPage() {

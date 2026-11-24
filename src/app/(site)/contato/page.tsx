@@ -1,10 +1,14 @@
 import React from 'react'
 import type { Metadata } from 'next'
 import { getInstitucionalData } from '@/lib/institucional'
+import { canonicalUrl } from '@/lib/seo'
 
 export const metadata: Metadata = {
   title: 'Contato',
   description: 'Converse com a Manacá Viagens pelo WhatsApp ou e-mail e comece a planejar sua viagem personalizada.',
+  alternates: {
+    canonical: canonicalUrl('/contato'),
+  },
 }
 
 export default async function ContatoPage() {
